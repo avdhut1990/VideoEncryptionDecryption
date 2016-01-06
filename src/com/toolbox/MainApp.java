@@ -1,8 +1,13 @@
 package com.toolbox;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 import com.toolbox.model.SourceData;
+import com.toolbox.view.ApplicationHomeController;
 import com.toolbox.view.EncryptionHomeController;
 
 import javafx.application.Application;
@@ -19,10 +24,10 @@ public class MainApp extends Application {
 	private Stage primaryStage;
     private BorderPane rootLayout;
     
-	/**
-     * The data as an observable list of sourceData
-     */
+	//Attributes & objects used throughout the application
     private ObservableList<SourceData> srcFileList = FXCollections.observableArrayList();
+    private KeyGenerator kgen;
+	private SecretKey skey;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -30,29 +35,21 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Video Encryption Software");
 
         initRootLayout();
-
-        showEncryptionHome();
-	}
-	
-	
-    public ObservableList<SourceData> getSrcFileList() {
-		return srcFileList;
-	}
-
-	public void addToSrcFileList(SourceData sourceData) {
-		this.srcFileList.add(sourceData);
+        showApplicationHome();
 	}
 
 	
-	/**
-     * Initializes the root layout.
-     */
+	//Method to initialize the Root Layout
     public void initRootLayout() {
         try {
             // Load root layout from FMXL file
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
+            
+            // Give the controller access to the main app
+            ApplicationHomeController controller = loader.getController();
+            controller.setMainApp(this);
 
             // Show the scene containing the root layout
             Scene scene = new Scene(rootLayout);
@@ -65,9 +62,7 @@ public class MainApp extends Application {
     }
 
     
-    /**
-     * Shows the encryption home inside the root layout.
-     */
+    //Method to display encryption home page within root layout 
     public void showEncryptionHome() {
         try {
             // Load encryption home & footer
@@ -85,17 +80,59 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
+    
+  //Method to display home page
+    public void showApplicationHome() {
+        try {
+            FXMLLoader homeLoader = new FXMLLoader();
+            homeLoader.setLocation(MainApp.class.getResource("view/ApplicationHome.fxml"));
+            AnchorPane applicationHome = (AnchorPane) homeLoader.load();
+
+            // Set encryption home & footer into root layout
+            rootLayout.setCenter(applicationHome);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     
-    /**
-     * Returns the main stage.
-     * @return
-     */
+    //Method to get the main/primary stage
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+	
+	
+	//Getter method for SourceData Observable List
+    public ObservableList<SourceData> getSrcFileList() {
+		return srcFileList;
+	}
+
+    
+    //Method to add a new record to SourceData Observable List
+	public void addToSrcFileList(SourceData sourceData) {
+		this.srcFileList.add(sourceData);
+	}
+	
+	
+	//Method to generate encryption key for the current application instance
+	public void generateEncKey() {
+		try {
+			this.kgen = KeyGenerator.getInstance("AES");
+			this.skey = kgen.generateKey();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	//Method to get the encryption key
+	public SecretKey getSkey() {
+		return this.skey;
+	}
     
 
+	//Main method
 	public static void main(String[] args) {
 		launch(args);
 	}

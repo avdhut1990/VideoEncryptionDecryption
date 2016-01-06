@@ -5,18 +5,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toolbox.view.ApplicationHomeController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+            	<MenuItem mnemonicParsing="false" fx:id="homeMenuBtn" text="Video Player" />
+              	<MenuItem mnemonicParsing="false" fx:id="encryptHomeMenuBtn" text="Encrypt Videos" />
+              	<MenuItem mnemonicParsing="false" fx:id="exitMenuBtn" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -27,4 +24,11 @@
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+	   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+	   <children>
+	      <Label layoutX="413.0" layoutY="4.0" text="Developed By Avdhut Vaidya" />
+	   </children>
+	</AnchorPane>
+   </bottom>
 </BorderPane>

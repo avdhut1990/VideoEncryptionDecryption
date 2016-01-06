@@ -1,11 +1,13 @@
 package com.toolbox.model;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class SourceData {
 	private final StringProperty fileSerial;
-	private final StringProperty fileName;
+	private final File file;
 	
 	/**
      * Default constructor.
@@ -18,18 +20,18 @@ public class SourceData {
      * Constructor with some initial data.
      * 
      * @param fileSerial
-     * @param fileName
+     * @param file
      */
-    public SourceData(String fileSerial, String fileName) {
+    public SourceData(String fileSerial, File file) {
         this.fileSerial = new SimpleStringProperty(fileSerial);
-        this.fileName = new SimpleStringProperty(fileName);
+        this.file = file;
     }
 
     public StringProperty getFileSerial() {
 		return fileSerial;
 	}
 
-	public StringProperty getFileName() {
-		return fileName;
+	public File getFile() {
+		return file;
 	}
 }

@@ -1,15 +1,23 @@
 package com.toolbox.view;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.List;
 
 import com.toolbox.MainApp;
+import com.toolbox.model.EncryptDecryptVideo;
 import com.toolbox.model.SourceData;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,6 +35,9 @@ public class EncryptionHomeController {
     
     @FXML
     private TextField destDir;
+    
+    @FXML
+    private Label msgLabel;
     
     @FXML
     private TableView<SourceData> fileTable;
@@ -60,6 +71,7 @@ public class EncryptionHomeController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        mainApp.generateEncKey();
 
         srcBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -71,13 +83,13 @@ public class EncryptionHomeController {
         			new ExtensionFilter("Video Files", "*.wmw", "*.avi", "*.mp4"));
         		List<File> tempList = fileChooser.showOpenMultipleDialog(mainApp.getPrimaryStage());
         		
-        		for (File srcFile : tempList) {
-					mainApp.addToSrcFileList(new SourceData("1", srcFile.toString()));
+        		for (int i=0; i<tempList.size(); i++) {
+					mainApp.addToSrcFileList(new SourceData(Integer.toString(i+1), tempList.get(i)));
 				}
-        		System.out.println(mainApp.getSrcFileList().toString());
+
         		fileTable.setItems(mainApp.getSrcFileList());
             	serialColumn.setCellValueFactory(cellData -> cellData.getValue().getFileSerial());
-            	fileNameColumn.setCellValueFactory(cellData -> cellData.getValue().getFileName());
+            	fileNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFile().toString()));
             }
         });
         
@@ -88,6 +100,31 @@ public class EncryptionHomeController {
         		DirectoryChooser dirChooser = new DirectoryChooser();
         		dirChooser.setTitle("Select destination");
         		destDir.setText(dirChooser.showDialog(mainApp.getPrimaryStage()).toString());
+            }
+        });
+        
+        encryptBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	if (!destDir.getText().isEmpty()) {
+	            	EncryptDecryptVideo edv = new EncryptDecryptVideo();
+	    			for (SourceData src : mainApp.getSrcFileList()) {
+	    				edv.encryptVideoFile(src.getFile(), destDir.getText(), mainApp.getSkey());
+	    			}
+	    			try {
+	    				String encodedKey = Base64.getEncoder().encodeToString(mainApp.getSkey().getEncoded());
+	    				File encKeyFile = new File(destDir.getText(), "enc_key");
+	    				FileWriter fos = new FileWriter(encKeyFile);
+	    				fos.write(encodedKey);
+	    				fos.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+	    			msgLabel.setText("All files encrypted successfully!");
+            	}
+            	else {
+            		msgLabel.setText("Please select destination directory!");
+            	}
             }
         });
     }

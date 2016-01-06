@@ -2,7 +2,10 @@ package com.toolbox.model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
@@ -10,30 +13,33 @@ import javax.crypto.SecretKey;
 
 public class EncryptDecryptVideo {
 
-	public File encryptVideoFile(File src, String destDir, SecretKey skey) throws Exception {
+	public void encryptVideoFile(File src, String destDir, SecretKey skey) {
 		String filename = src.getName();
 		File encryptedFile = new File(destDir, filename.substring(0, filename.lastIndexOf("."))+"_enc.ddd");
-        FileInputStream fis = new FileInputStream(src);
-        FileOutputStream fos = new FileOutputStream(encryptedFile);
-        int read;
-        
-        if(!encryptedFile.exists())
-            encryptedFile.createNewFile();
-        
-        Cipher encipher = Cipher.getInstance("AES");
-        
-        encipher.init(Cipher.ENCRYPT_MODE, skey);
-        CipherInputStream cis = new CipherInputStream(fis, encipher);
+		try {
+	        FileInputStream fis = new FileInputStream(src);
+	        FileOutputStream fos = new FileOutputStream(encryptedFile);
+	        int read;
+	        
+	        if(!encryptedFile.exists())
+	            encryptedFile.createNewFile();
+	        
+	        Cipher encipher = Cipher.getInstance("AES");
+	        
+	        encipher.init(Cipher.ENCRYPT_MODE, skey);
+	        CipherInputStream cis = new CipherInputStream(fis, encipher);
 
-        while((read = cis.read()) != -1) {
-			fos.write((char)read);
-			fos.flush();
+	        while((read = cis.read()) != -1) {
+				fos.write((char)read);
+				fos.flush();
+			}
+	        cis.close();
+	    	fis.close();
+	    	fos.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-        cis.close();
-    	fis.close();
-    	fos.close();
-
-        return encryptedFile;
 	}
 
 

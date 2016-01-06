@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toolbox.view.EncryptionHomeController">
+<AnchorPane prefHeight="200.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toolbox.view.EncryptionHomeController">
    <children>
-      <TableView fx:id="fileTable" focusTraversable="false" prefHeight="199.0" prefWidth="600.0">
+      <TableView fx:id="fileTable" focusTraversable="false" prefHeight="250.0" prefWidth="600.0">
          <columns>
             <TableColumn fx:id="serialColumn" maxWidth="80.0" minWidth="29.0" prefWidth="37.0" text="#" />
             <TableColumn fx:id="fileNameColumn" editable="false" prefWidth="560.0" resizable="false" sortable="false" text="Video File" />
@@ -16,10 +17,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label layoutX="14.0" layoutY="264.0" text="Destination Directory:" />
-      <Button fx:id="srcBtn" layoutX="14.0" layoutY="221.0" mnemonicParsing="false" text="Add Files" />
-      <Button fx:id="encryptBtn" layoutX="99.0" layoutY="221.0" mnemonicParsing="false" text="Encrypt Files" />
-      <Button fx:id="destBtn" layoutX="522.0" layoutY="259.0" mnemonicParsing="false" text="Browse" />
-      <TextField fx:id="destDir" layoutX="156.0" layoutY="259.0" prefHeight="27.0" prefWidth="352.0" />
+      <Button fx:id="srcBtn" layoutX="15.0" layoutY="270.0" mnemonicParsing="false" text="Add Files" />
+      <Button fx:id="encryptBtn" layoutX="100.0" layoutY="270.0" mnemonicParsing="false" text="Encrypt Files" />
+      <Label layoutX="15.0" layoutY="310.0" text="Destination Directory:" />
+      <TextField fx:id="destDir" layoutX="156.0" layoutY="310.0" prefHeight="27.0" prefWidth="352.0" />
+      <Button fx:id="destBtn" layoutX="522.0" layoutY="310.0" mnemonicParsing="false" text="Browse" />
+      <Label fx:id="msgLabel" layoutX="300.0" layoutY="275.0" prefHeight="17.0" prefWidth="280.0" textFill="RED" />
    </children>
 </AnchorPane>
