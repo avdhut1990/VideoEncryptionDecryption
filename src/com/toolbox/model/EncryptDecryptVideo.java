@@ -42,7 +42,8 @@ public class EncryptDecryptVideo {
 
 	public File decryptVideoFile(File src, SecretKey skey) throws Exception {
 		String workingDir = System.getProperty("user.dir");
-		File decryptedFile = new File(workingDir, "movie.mp4");
+
+		File decryptedFile = new File(workingDir+"/temp", "movie.mp4");
 		FileInputStream fis = new FileInputStream(src);
         FileOutputStream fos = new FileOutputStream(decryptedFile);
         int read;
