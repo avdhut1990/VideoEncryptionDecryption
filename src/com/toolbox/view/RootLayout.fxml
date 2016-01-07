@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toolbox.view.ApplicationHomeController">
+<BorderPane prefHeight="380.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toolbox.view.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -17,18 +17,18 @@
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+          	<items>
+          		<MenuItem mnemonicParsing="false" fx:id="aboutMenuBtn" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
-   <bottom>
+   <!-- <bottom>
 	   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
 	   <children>
 	      <Label layoutX="413.0" layoutY="4.0" text="Developed By Avdhut Vaidya" />
 	   </children>
 	</AnchorPane>
-   </bottom>
+   </bottom> -->
 </BorderPane>

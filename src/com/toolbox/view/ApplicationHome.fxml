@@ -1,18 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.media.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.StackPane?>
 
-
-<AnchorPane disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toolbox.view.ApplicationHomeController">
    <children>
-      <Label layoutX="115.0" layoutY="184.0" text="Video Encryption-Decryption" wrapText="true">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
+      <Label layoutX="15.0" layoutY="265.0" text="Video File:" />
+      <TextField fx:id="videoFileText" layoutX="150.0" layoutY="260.0" prefHeight="27.0" prefWidth="350.0" />
+      <Button fx:id="videoFileBtn" layoutX="515.0" layoutY="260.0" mnemonicParsing="false" text="Browse..." />
+      <Label layoutX="15.0" layoutY="305.0" text="Encryption Key File:" />
+      <TextField fx:id="encKeyFileText" layoutX="150.0" layoutY="300.0" prefHeight="27.0" prefWidth="350.0" />
+      <Button fx:id="encKeyFileBtn" layoutX="515.0" layoutY="300.0" mnemonicParsing="false" text="Browse..." />
+      <BorderPane prefHeight="230.0" prefWidth="600.0" scaleShape="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <MediaView fx:id="playerView" fitHeight="180.0" fitWidth="600.0" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="playBtn" mnemonicParsing="false" text="Play" GridPane.halignment="RIGHT">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="fullScreenBtn" mnemonicParsing="false" text="Full Screen" GridPane.columnIndex="1" />
+                  <Button fx:id="stopBtn" mnemonicParsing="false" text="Stop" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </GridPane>
+         </bottom>
+      </BorderPane>
+      <Separator layoutX="45.0" layoutY="245.0" prefHeight="0.0" prefWidth="510.0" />
    </children>
 </AnchorPane>

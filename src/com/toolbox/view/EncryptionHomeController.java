@@ -1,10 +1,7 @@
 package com.toolbox.view;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.Base64;
 import java.util.List;
 
@@ -16,11 +13,12 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -28,16 +26,14 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class EncryptionHomeController {
 	
 	// Reference to the main application.
-    private MainApp mainApp;
+    @SuppressWarnings("unused")
+	private MainApp mainApp;
     
     @FXML
     private Button srcBtn, encryptBtn, destBtn;
     
     @FXML
     private TextField destDir;
-    
-    @FXML
-    private Label msgLabel;
     
     @FXML
     private TableView<SourceData> fileTable;
@@ -47,6 +43,8 @@ public class EncryptionHomeController {
     
     @FXML
     private TableColumn<SourceData, String> fileNameColumn;
+    
+    private Alert alert = new Alert(AlertType.ERROR);
 	
     /**
      * The constructor.
@@ -83,13 +81,15 @@ public class EncryptionHomeController {
         			new ExtensionFilter("Video Files", "*.wmw", "*.avi", "*.mp4"));
         		List<File> tempList = fileChooser.showOpenMultipleDialog(mainApp.getPrimaryStage());
         		
-        		for (int i=0; i<tempList.size(); i++) {
-					mainApp.addToSrcFileList(new SourceData(Integer.toString(i+1), tempList.get(i)));
-				}
-
-        		fileTable.setItems(mainApp.getSrcFileList());
-            	serialColumn.setCellValueFactory(cellData -> cellData.getValue().getFileSerial());
-            	fileNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFile().toString()));
+        		if (tempList != null) {
+	        		for (int i=0; i<tempList.size(); i++) {
+						mainApp.addToSrcFileList(new SourceData(Integer.toString(i+1), tempList.get(i)));
+					}
+	
+	        		fileTable.setItems(mainApp.getSrcFileList());
+	            	serialColumn.setCellValueFactory(cellData -> cellData.getValue().getFileSerial());
+	            	fileNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFile().toString()));
+        		}
             }
         });
         
@@ -99,7 +99,10 @@ public class EncryptionHomeController {
         		//Select encryption destination directory
         		DirectoryChooser dirChooser = new DirectoryChooser();
         		dirChooser.setTitle("Select destination");
-        		destDir.setText(dirChooser.showDialog(mainApp.getPrimaryStage()).toString());
+        		File dest = dirChooser.showDialog(mainApp.getPrimaryStage());
+        		if (dest != null) {
+        			destDir.setText(dest.toString());
+        		}
             }
         });
         
@@ -113,17 +116,25 @@ public class EncryptionHomeController {
 	    			}
 	    			try {
 	    				String encodedKey = Base64.getEncoder().encodeToString(mainApp.getSkey().getEncoded());
-	    				File encKeyFile = new File(destDir.getText(), "enc_key");
+	    				File encKeyFile = new File(destDir.getText(), "enc.key");
 	    				FileWriter fos = new FileWriter(encKeyFile);
 	    				fos.write(encodedKey);
 	    				fos.close();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-	    			msgLabel.setText("All files encrypted successfully!");
+	    			alert.setAlertType(AlertType.INFORMATION);
+            		alert.setTitle("Success");
+            		alert.setHeaderText(null);
+            		alert.setContentText("All files encrypted successfully!");
+            		alert.showAndWait();
             	}
             	else {
-            		msgLabel.setText("Please select destination directory!");
+            		alert.setAlertType(AlertType.ERROR);
+            		alert.setTitle("Error");
+            		alert.setHeaderText(null);
+            		alert.setContentText("Please select destination directory!");
+            		alert.showAndWait();
             	}
             }
         });

@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import com.toolbox.model.SourceData;
 import com.toolbox.view.ApplicationHomeController;
 import com.toolbox.view.EncryptionHomeController;
+import com.toolbox.view.RootLayoutController;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -48,7 +49,7 @@ public class MainApp extends Application {
             rootLayout = (BorderPane) loader.load();
             
             // Give the controller access to the main app
-            ApplicationHomeController controller = loader.getController();
+            RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
 
             // Show the scene containing the root layout
@@ -91,6 +92,10 @@ public class MainApp extends Application {
 
             // Set encryption home & footer into root layout
             rootLayout.setCenter(applicationHome);
+            
+            // Give the controller access to the main app
+            ApplicationHomeController controller = homeLoader.getController();
+            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

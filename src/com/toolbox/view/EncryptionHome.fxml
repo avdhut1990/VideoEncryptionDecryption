@@ -19,9 +19,8 @@
       </TableView>
       <Button fx:id="srcBtn" layoutX="15.0" layoutY="270.0" mnemonicParsing="false" text="Add Files" />
       <Button fx:id="encryptBtn" layoutX="100.0" layoutY="270.0" mnemonicParsing="false" text="Encrypt Files" />
-      <Label layoutX="15.0" layoutY="310.0" text="Destination Directory:" />
-      <TextField fx:id="destDir" layoutX="156.0" layoutY="310.0" prefHeight="27.0" prefWidth="352.0" />
-      <Button fx:id="destBtn" layoutX="522.0" layoutY="310.0" mnemonicParsing="false" text="Browse" />
-      <Label fx:id="msgLabel" layoutX="300.0" layoutY="275.0" prefHeight="17.0" prefWidth="280.0" textFill="RED" />
+      <Label layoutX="15.0" layoutY="315.0" text="Destination Directory:" />
+      <TextField fx:id="destDir" layoutX="155.0" layoutY="310.0" prefHeight="27.0" prefWidth="345.0" />
+      <Button fx:id="destBtn" layoutX="515.0" layoutY="310.0" mnemonicParsing="false" text="Browse..." />
    </children>
 </AnchorPane>
